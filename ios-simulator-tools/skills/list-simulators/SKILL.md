@@ -1,6 +1,6 @@
 ---
-name: list-ios-simulators
-description: This skill should be used when the user asks to "list simulators", "show available simulators", "find iOS simulators", "check simulator devices", "get simulator list", or needs to know which iOS/watchOS/tvOS simulators are available for testing or running apps.
+name: list-simulators
+description: This skill should be used when the user asks to "list simulators", "show available simulators", "find iOS simulators", "check simulator devices", "get simulator list", "シミュレータ一覧", "利用可能なシミュレータ", or needs to know which iOS/watchOS/tvOS/visionOS simulators are available for testing or running apps.
 ---
 
 # List iOS Simulators
@@ -13,6 +13,7 @@ Retrieve a list of available simulators on the system. Use this skill to:
 - Find available simulator devices before building or testing
 - Filter simulators by device name, OS version, or device type
 - Get simulator UDIDs for destination specification
+- Check simulator states (Booted/Shutdown)
 
 ## Workflow
 
@@ -28,10 +29,16 @@ Retrieve a list of available simulators on the system. Use this skill to:
 xcrun simctl list devices available
 ```
 
-### List with JSON Output
+### List with JSON Output (for programmatic processing)
 
 ```bash
 xcrun simctl list devices available --json
+```
+
+### List All Runtimes
+
+```bash
+xcrun simctl list runtimes
 ```
 
 ## Filter Patterns
@@ -55,6 +62,11 @@ xcrun simctl list devices available | grep -A 50 "iOS 18"
 - Apple Watch: `grep -i "Apple Watch"`
 - Apple TV: `grep -i "Apple TV"`
 - Apple Vision Pro: `grep -i "Apple Vision"`
+
+### By State
+
+- Booted only: `grep "(Booted)"`
+- Shutdown only: `grep "(Shutdown)"`
 
 ## Output Format
 
@@ -87,4 +99,24 @@ Or by name:
 
 ```
 -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+```
+
+## Common Use Cases
+
+### Find booted simulators
+
+```bash
+xcrun simctl list devices available | grep "(Booted)"
+```
+
+### Get UDID of specific device
+
+```bash
+xcrun simctl list devices available --json | jq -r '.devices | to_entries[] | .value[] | select(.name == "iPhone 15 Pro") | .udid'
+```
+
+### List device types available for creation
+
+```bash
+xcrun simctl list devicetypes
 ```
