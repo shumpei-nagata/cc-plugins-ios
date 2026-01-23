@@ -5,6 +5,7 @@ Run tests for an iOS app using xcodebuild test.
 Usage:
     python3 test.py --project <path> --scheme <name> --destination <dest> [options]
 """
+from __future__ import annotations
 
 import argparse
 import json

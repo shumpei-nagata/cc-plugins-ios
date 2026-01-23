@@ -5,6 +5,7 @@ Build an iOS app using xcodebuild.
 Usage:
     python3 build.py --project <path> --scheme <name> --destination <dest> [options]
 """
+from __future__ import annotations
 
 import argparse
 import json
