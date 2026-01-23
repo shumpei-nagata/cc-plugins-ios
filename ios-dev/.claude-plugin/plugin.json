@@ -2,5 +2,18 @@
   "name": "ios-dev",
   "version": "0.1.0",
   "description": "Comprehensive iOS development skills for Claude Code - build, test, and simulator management",
-  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl"]
+  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl"],
+  "mcp_servers": [
+    {
+      "name": "context7",
+      "transport": "http",
+      "url": "https://mcp.context7.com/mcp/oauth"
+    },
+    {
+      "name": "apple-docs",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@kimsungwhee/apple-docs-mcp"]
+    }
+  ]
 }
