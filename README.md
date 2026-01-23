@@ -30,7 +30,19 @@ ios-dev/
 
 ## Installation
 
-Install the plugin using Claude Code:
+### From Marketplace (Recommended)
+
+1. Add the marketplace:
+```
+/plugin marketplace add shumpei-nagata/cc-plugins-ios
+```
+
+2. Install the plugin:
+```
+/plugin install ios-dev@cc-plugins-ios
+```
+
+### From Local Path
 
 ```bash
 claude-code plugin add /path/to/cc-plugins-ios/ios-dev
