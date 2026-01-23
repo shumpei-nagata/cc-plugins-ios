@@ -1,6 +1,7 @@
 ---
-name: delete-simulator
+name: simulator-delete
 description: This skill should be used when the user asks to "delete simulator", "remove simulator", "clean up simulators", "delete unavailable simulators", "シミュレータを削除", "シミュレータを消す", "不要なシミュレータを削除", or needs to remove simulator devices or clean up unavailable/orphaned simulators.
+context: fork
 ---
 
 # Delete iOS Simulators

@@ -1,6 +1,7 @@
 ---
-name: screenshot-simulator
+name: simulator-screenshot
 description: This skill should be used when the user asks to "take screenshot", "capture screen", "record video", "screen recording", "simulator screenshot", "simctl io", "スクリーンショット", "画面キャプチャ", "画面録画", or needs to capture screenshots or record video from iOS/watchOS/tvOS/visionOS simulators.
+context: fork
 ---
 
 # Screenshot and Screen Recording for iOS Simulators

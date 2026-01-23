@@ -1,5 +1,5 @@
 ---
-name: test-ios-app
+name: build-test
 description: This skill should be used when the user asks to "run tests", "execute tests", "run unit tests", "run UI tests", "test the app", "xcodebuild test", or needs to run Xcode tests for an iOS, watchOS, tvOS, or visionOS app.
 context: fork
 ---

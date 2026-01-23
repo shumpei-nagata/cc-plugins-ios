@@ -1,5 +1,5 @@
 ---
-name: build-ios-app
+name: build-app
 description: This skill should be used when the user asks to "build the app", "build iOS app", "compile the project", "run xcodebuild", "build for simulator", "build for device", or needs to build an Xcode project or workspace.
 context: fork
 ---

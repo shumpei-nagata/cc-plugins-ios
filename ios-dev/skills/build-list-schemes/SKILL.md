@@ -1,6 +1,7 @@
 ---
-name: list-xcode-schemes
+name: build-list-schemes
 description: This skill should be used when the user asks to "list schemes", "show available schemes", "find Xcode schemes", "get project schemes", "check workspace schemes", or needs to know which build schemes are available in an Xcode project (.xcodeproj) or workspace (.xcworkspace).
+context: fork
 ---
 
 # List Xcode Schemes

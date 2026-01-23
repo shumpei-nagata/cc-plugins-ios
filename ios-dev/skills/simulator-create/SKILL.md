@@ -1,6 +1,7 @@
 ---
-name: create-simulator
+name: simulator-create
 description: This skill should be used when the user asks to "create simulator", "add simulator", "make new simulator", "create new device", "シミュレータを作成", "シミュレータを追加", "新しいシミュレータ", or needs to create a new iOS/watchOS/tvOS/visionOS simulator device with specific device type and runtime.
+context: fork
 ---
 
 # Create iOS Simulators

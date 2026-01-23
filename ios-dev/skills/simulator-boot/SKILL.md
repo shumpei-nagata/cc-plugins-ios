@@ -1,6 +1,7 @@
 ---
-name: boot-simulator
+name: simulator-boot
 description: This skill should be used when the user asks to "boot simulator", "start simulator", "launch simulator", "shutdown simulator", "stop simulator", "restart simulator", "シミュレータを起動", "シミュレータを終了", "シミュレータを再起動", or needs to control the running state of iOS/watchOS/tvOS/visionOS simulators.
+context: fork
 ---
 
 # Boot/Shutdown iOS Simulators

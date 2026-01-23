@@ -1,6 +1,7 @@
 ---
-name: list-simulators
+name: simulator-list
 description: This skill should be used when the user asks to "list simulators", "show available simulators", "find iOS simulators", "check simulator devices", "get simulator list", "シミュレータ一覧", "利用可能なシミュレータ", or needs to know which iOS/watchOS/tvOS/visionOS simulators are available for testing or running apps.
+context: fork
 ---
 
 # List iOS Simulators
