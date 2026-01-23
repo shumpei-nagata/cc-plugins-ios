@@ -1,6 +1,0 @@
-{
-  "name": "ios-simulator-tools",
-  "version": "0.1.0",
-  "description": "iOS Simulator management skills for Claude Code - list, boot, create, delete, and capture simulators",
-  "keywords": ["ios", "simulator", "simctl", "xcode", "testing"]
-}

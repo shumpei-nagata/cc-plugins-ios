@@ -1,6 +1,0 @@
-{
-  "name": "ios-build-tools",
-  "version": "0.1.0",
-  "description": "iOS app build and test execution skills for Claude Code",
-  "keywords": ["ios", "xcode", "build", "test", "simulator"]
-}
