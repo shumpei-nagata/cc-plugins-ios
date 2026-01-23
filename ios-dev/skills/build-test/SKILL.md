@@ -20,7 +20,7 @@ Execute Xcode tests with specified configuration. Use this skill to:
 Run the test script:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project <path> \
     --scheme <scheme-name> \
     --destination <destination>
@@ -49,7 +49,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Run All Tests
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro"
@@ -58,7 +58,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Run Specific Test Class
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro" \
@@ -68,7 +68,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Run Specific Test Method
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro" \
@@ -78,7 +78,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Run UI Tests Only
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyAppUITests \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro"
@@ -87,7 +87,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Run Tests in Parallel
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro" \
@@ -97,7 +97,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
 ### Skip Specific Tests
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/test-ios-app/scripts/test.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro" \

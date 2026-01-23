@@ -20,17 +20,17 @@ Retrieve scheme information from Xcode projects. Use this skill to:
 Run the script with the path to the project or workspace:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/list-xcode-schemes/scripts/list_schemes.py <path>
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-list-schemes/scripts/list_schemes.py <path>
 ```
 
 ### Examples
 
 ```bash
 # For a project
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/list-xcode-schemes/scripts/list_schemes.py /path/to/MyApp.xcodeproj
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-list-schemes/scripts/list_schemes.py /path/to/MyApp.xcodeproj
 
 # For a workspace
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/list-xcode-schemes/scripts/list_schemes.py /path/to/MyApp.xcworkspace
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-list-schemes/scripts/list_schemes.py /path/to/MyApp.xcworkspace
 ```
 
 ## Output Format

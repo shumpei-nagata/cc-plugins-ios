@@ -20,7 +20,7 @@ Execute Xcode builds with specified configuration. Use this skill to:
 Run the build script:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
     --project <path> \
     --scheme <scheme-name> \
     --destination <destination>
@@ -46,7 +46,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
 ### Build for Simulator
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro"
@@ -55,7 +55,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
 ### Build for Device
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
     --project ./MyApp.xcodeproj \
     --scheme MyApp \
     --destination "generic/platform=iOS"
@@ -64,7 +64,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
 ### Build Swift Package
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
     --project . \
     --scheme MyPackage \
     --destination "platform=iOS Simulator,name=iPhone 15 Pro"
@@ -73,7 +73,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
 ### Build with Release Configuration
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-ios-app/scripts/build.py \
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
     --project ./MyApp.xcworkspace \
     --scheme MyApp \
     --destination "generic/platform=iOS" \
