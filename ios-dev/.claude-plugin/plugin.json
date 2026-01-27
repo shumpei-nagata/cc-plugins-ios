@@ -1,8 +1,8 @@
 {
   "name": "ios-dev",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Comprehensive iOS development skills for Claude Code - build, test, and simulator management",
-  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl"],
+  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl", "swiftlint"],
   "mcpServers": {
     "context7": {
       "type": "http",
