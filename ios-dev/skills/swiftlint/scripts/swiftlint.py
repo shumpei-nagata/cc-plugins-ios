@@ -60,6 +60,56 @@ def parse_swiftlint_output(output: str) -> List[Dict]:
     return violations
 
 
+def run_swiftlint_rules(
+    swiftlint_path: str,
+    config_path: Optional[str] = None,
+    rule_id: Optional[str] = None
+) -> Dict:
+    """Run SwiftLint rules command to list available rules or show rule details."""
+
+    if not os.path.isfile(swiftlint_path):
+        return {
+            "success": False,
+            "error": "SwiftLint executable not found",
+            "details": f"Path does not exist: {swiftlint_path}"
+        }
+
+    cmd = [swiftlint_path, "rules"]
+    if rule_id:
+        cmd.append(rule_id)
+    if config_path:
+        if not os.path.isfile(config_path):
+            return {
+                "success": False,
+                "error": "SwiftLint config not found",
+                "details": f"Config file does not exist: {config_path}"
+            }
+        cmd.extend(["--config", config_path])
+
+    cwd = os.path.dirname(os.path.abspath(config_path)) if config_path else None
+
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            check=False,
+            cwd=cwd
+        )
+        output = result.stdout or result.stderr
+        return {
+            "success": True,
+            "rule_id": rule_id,
+            "output": output
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": "Failed to run SwiftLint rules",
+            "details": str(e)
+        }
+
+
 def run_swiftlint(
     swiftlint_path: str,
     config_path: str,
@@ -213,8 +263,16 @@ def main():
     )
     parser.add_argument(
         "--config-path",
-        required=True,
         help="Path to .swiftlint.yml configuration file"
+    )
+    parser.add_argument(
+        "--rules",
+        action="store_true",
+        help="List available SwiftLint rules (or show details for a specific rule with --rule-id)"
+    )
+    parser.add_argument(
+        "--rule-id",
+        help="Show details for a specific rule (use with --rules)"
     )
     parser.add_argument(
         "--path",
@@ -243,6 +301,18 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if args.rules:
+        result = run_swiftlint_rules(
+            swiftlint_path=args.swiftlint_path,
+            config_path=args.config_path,
+            rule_id=args.rule_id
+        )
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        sys.exit(0 if result.get("success") else 1)
+
+    if not args.config_path:
+        parser.error("--config-path is required when not using --rules")
 
     result = run_swiftlint(
         swiftlint_path=args.swiftlint_path,
