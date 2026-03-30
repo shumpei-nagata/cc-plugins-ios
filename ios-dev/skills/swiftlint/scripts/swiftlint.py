@@ -98,6 +98,11 @@ def run_swiftlint(
 
     mode_str = "_and_".join(modes)
 
+    # When --path is not specified, run SwiftLint from the config directory
+    # so that the `included` setting in .swiftlint.yml is respected.
+    # Passing --path overrides `included`, so we only forward it when explicitly given.
+    cwd = os.path.dirname(os.path.abspath(config_path)) if not target_path else None
+
     result = {
         "success": True,
         "mode": mode_str,
@@ -121,7 +126,8 @@ def run_swiftlint(
                 fix_cmd,
                 capture_output=True,
                 text=True,
-                check=False
+                check=False,
+                cwd=cwd
             )
             result["fix_applied"] = True
         except Exception as e:
@@ -144,7 +150,8 @@ def run_swiftlint(
                 format_cmd,
                 capture_output=True,
                 text=True,
-                check=False
+                check=False,
+                cwd=cwd
             )
             result["format_applied"] = True
         except Exception as e:
@@ -168,7 +175,8 @@ def run_swiftlint(
             lint_cmd,
             capture_output=True,
             text=True,
-            check=False
+            check=False,
+            cwd=cwd
         )
 
         # Parse violations from stdout
