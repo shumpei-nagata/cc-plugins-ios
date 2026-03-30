@@ -1,17 +1,6 @@
 {
   "name": "ios-dev",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Comprehensive iOS development skills for Claude Code - build, test, and simulator management",
-  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl", "swiftlint"],
-  "mcpServers": {
-    "context7": {
-      "type": "http",
-      "url": "https://mcp.context7.com/mcp/oauth"
-    },
-    "apple-docs": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@kimsungwhee/apple-docs-mcp"]
-    }
-  }
+  "keywords": ["ios", "xcode", "build", "test", "simulator", "simctl", "swiftlint"]
 }
