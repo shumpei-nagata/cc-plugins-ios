@@ -10,10 +10,10 @@ Run SwiftLint to analyze and fix Swift code style issues, and inspect available 
 
 ## Purpose
 
-Execute SwiftLint with various modes including lint-only, auto-fix, format, and rules inspection. Use this skill to:
+Execute SwiftLint with various modes including lint-only, auto-fix, fix+format, and rules inspection. Use this skill to:
 - Check Swift code for style violations
 - Auto-fix correctable issues with `--fix`
-- Format code with `--format`
+- Format code with `--fix --format`
 - Run both fix and format together
 - List all available SwiftLint rules with `--rules`
 - Show detailed information about a specific rule with `--rules --rule-id <rule_id>`
@@ -45,9 +45,9 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `--path` | Target path to lint (file or directory) | Current directory |
+| `--path` | Target path to lint (file or directory). Can be specified multiple times. The script passes these to `swiftlint lint` as positional paths. | Current directory |
 | `--fix` | Auto-fix correctable violations | Disabled |
-| `--format` | Format code (whitespace/indentation) | Disabled |
+| `--format` | Format code. Requires `--fix` with current SwiftLint versions. | Disabled |
 | `--strict` | Treat warnings as errors | Disabled |
 | `--quiet` | Only output errors | Disabled |
 | `--rules` | List all rules or show details for a specific rule | Disabled |
@@ -74,17 +74,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
     --fix
 ```
 
-### Format Code
-
-```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
-    --swiftlint-path /opt/homebrew/bin/swiftlint \
-    --config-path ./project/.swiftlint.yml \
-    --path ./Sources \
-    --format
-```
-
-### Fix and Format Together
+### Fix and Format Code
 
 ```bash
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
@@ -103,6 +93,16 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
     --config-path ./project/.swiftlint.yml \
     --path ./Sources/MyFile.swift \
     --fix
+```
+
+### Lint Multiple Paths
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/swiftlint/scripts/swiftlint.py \
+    --swiftlint-path /opt/homebrew/bin/swiftlint \
+    --config-path ./project/.swiftlint.yml \
+    --path ./Sources \
+    --path ./Tests
 ```
 
 ### List All Rules
@@ -188,7 +188,8 @@ The script outputs JSON with detailed results:
   "format_applied": true,
   "violations_count": 0,
   "violations": [],
-  "target_path": "./Sources"
+  "target_path": "./Sources",
+  "target_paths": ["./Sources"]
 }
 ```
 

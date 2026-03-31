@@ -6,7 +6,6 @@ import json
 import os
 import subprocess
 import sys
-from pathlib import Path
 from typing import Dict, List, Optional
 
 
@@ -113,7 +112,7 @@ def run_swiftlint_rules(
 def run_swiftlint(
     swiftlint_path: str,
     config_path: str,
-    target_path: Optional[str] = None,
+    target_paths: Optional[List[str]] = None,
     fix: bool = False,
     format_code: bool = False,
     strict: bool = False,
@@ -137,6 +136,13 @@ def run_swiftlint(
             "details": f"Config file does not exist: {config_path}"
         }
 
+    if format_code and not fix:
+        return {
+            "success": False,
+            "error": "Invalid SwiftLint options",
+            "details": "--format requires --fix with current SwiftLint versions"
+        }
+
     # Determine mode
     modes = []
     if fix:
@@ -147,78 +153,39 @@ def run_swiftlint(
         modes.append("lint")
 
     mode_str = "_and_".join(modes)
-
-    # When --path is not specified, run SwiftLint from the config directory
-    # so that the `included` setting in .swiftlint.yml is respected.
-    # Passing --path overrides `included`, so we only forward it when explicitly given.
-    cwd = os.path.dirname(os.path.abspath(config_path)) if not target_path else None
+    config_dir = os.path.dirname(os.path.abspath(config_path))
+    normalized_paths = target_paths or []
 
     result = {
         "success": True,
         "mode": mode_str,
-        "target_path": target_path or ".",
+        "target_path": normalized_paths[0] if len(normalized_paths) == 1 else ".",
+        "target_paths": normalized_paths,
         "violations": [],
         "violations_count": 0,
         "warnings_count": 0,
         "errors_count": 0
     }
 
-    # Run fix if requested
+    lint_cmd = [
+        swiftlint_path,
+        "lint",
+        "--config",
+        config_path,
+        "--working-directory",
+        config_dir
+    ]
     if fix:
-        fix_cmd = [swiftlint_path, "--fix", "--config", config_path]
-        if target_path:
-            fix_cmd.extend(["--path", target_path])
-        if quiet:
-            fix_cmd.append("--quiet")
-
-        try:
-            subprocess.run(
-                fix_cmd,
-                capture_output=True,
-                text=True,
-                check=False,
-                cwd=cwd
-            )
-            result["fix_applied"] = True
-        except Exception as e:
-            return {
-                "success": False,
-                "error": "Failed to run SwiftLint --fix",
-                "details": str(e)
-            }
-
-    # Run format if requested
+        lint_cmd.append("--fix")
+        result["fix_applied"] = True
     if format_code:
-        format_cmd = [swiftlint_path, "--format", "--config", config_path]
-        if target_path:
-            format_cmd.extend(["--path", target_path])
-        if quiet:
-            format_cmd.append("--quiet")
-
-        try:
-            subprocess.run(
-                format_cmd,
-                capture_output=True,
-                text=True,
-                check=False,
-                cwd=cwd
-            )
-            result["format_applied"] = True
-        except Exception as e:
-            return {
-                "success": False,
-                "error": "Failed to run SwiftLint --format",
-                "details": str(e)
-            }
-
-    # Always run lint to get current state
-    lint_cmd = [swiftlint_path, "lint", "--config", config_path]
-    if target_path:
-        lint_cmd.extend(["--path", target_path])
+        lint_cmd.append("--format")
+        result["format_applied"] = True
     if strict:
         lint_cmd.append("--strict")
     if quiet:
         lint_cmd.append("--quiet")
+    lint_cmd.extend(normalized_paths)
 
     try:
         lint_result = subprocess.run(
@@ -226,7 +193,7 @@ def run_swiftlint(
             capture_output=True,
             text=True,
             check=False,
-            cwd=cwd
+            cwd=config_dir
         )
 
         # Parse violations from stdout
@@ -237,7 +204,13 @@ def run_swiftlint(
             result["warnings_count"] = sum(1 for v in violations if v["severity"] == "warning")
             result["errors_count"] = sum(1 for v in violations if v["severity"] == "error")
 
-        # Check return code for strict mode
+        if lint_result.returncode != 0 and not result["violations"] and lint_result.stderr:
+            return {
+                "success": False,
+                "error": "Failed to run SwiftLint lint",
+                "details": lint_result.stderr.strip()
+            }
+
         if strict and lint_result.returncode != 0:
             result["strict_mode_failed"] = True
 
@@ -276,7 +249,14 @@ def main():
     )
     parser.add_argument(
         "--path",
-        help="Target path to lint (file or directory)"
+        action="append",
+        dest="paths",
+        help="Target path to lint (file or directory). Can be specified multiple times."
+    )
+    parser.add_argument(
+        "positional_paths",
+        nargs="*",
+        help="Paths to files or directories to lint"
     )
     parser.add_argument(
         "--fix",
@@ -314,10 +294,16 @@ def main():
     if not args.config_path:
         parser.error("--config-path is required when not using --rules")
 
+    target_paths = []
+    if args.paths:
+        target_paths.extend(args.paths)
+    if args.positional_paths:
+        target_paths.extend(args.positional_paths)
+
     result = run_swiftlint(
         swiftlint_path=args.swiftlint_path,
         config_path=args.config_path,
-        target_path=args.path,
+        target_paths=target_paths,
         fix=args.fix,
         format_code=args.format_code,
         strict=args.strict,
