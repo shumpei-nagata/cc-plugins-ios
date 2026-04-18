@@ -88,10 +88,20 @@ platform=iOS Simulator,name=iPhone 15 Pro
 platform=iOS Simulator,id=<UDID>
 ```
 
-### iOS Device (Generic)
+### iOS Device (実機・UDID指定)
+```
+platform=iOS,id=<UDID>
+platform=iOS,name=<デバイス名>
+```
+
+接続デバイスのUDIDは `device-list` スキルで確認できる。
+
+### iOS Device (Generic・任意の接続デバイス)
 ```
 generic/platform=iOS
 ```
+
+コード署名の設定が整っていれば、接続デバイスを自動選択する。
 
 ### macOS
 ```
@@ -141,4 +151,16 @@ If project path is not specified:
 2. Search for `.xcodeproj` files
 3. Check for `Package.swift` (Swift Package)
 
-Use the `list-xcode-schemes` skill to find available schemes before building.
+Use the `build-list-schemes` skill to find available schemes before building.
+
+## 実機ビルドのワークフロー
+
+1. `device-list` スキルで接続デバイスのUDIDを確認
+2. 取得したUDIDを `--destination` に指定してビルド
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-app/scripts/build.py \
+    --project ./MyApp.xcworkspace \
+    --scheme MyApp \
+    --destination "platform=iOS,id=<UDIDをここに>"
+```

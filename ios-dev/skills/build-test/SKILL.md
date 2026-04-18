@@ -182,4 +182,18 @@ If project path is not specified:
 2. Search for `.xcodeproj` files
 3. Check for `Package.swift` (Swift Package)
 
-Use the `list-xcode-schemes` skill to find available test schemes.
+Use the `build-list-schemes` skill to find available test schemes.
+
+## 実機テストのワークフロー
+
+1. `device-list` スキルで接続デバイスのUDIDを確認
+2. 取得したUDIDを `--destination` に指定してテスト実行
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/build-test/scripts/test.py \
+    --project ./MyApp.xcworkspace \
+    --scheme MyApp \
+    --destination "platform=iOS,id=<UDIDをここに>"
+```
+
+> Note: 実機でのUIテストはデバイスが解除（ロック解除）状態である必要がある。
