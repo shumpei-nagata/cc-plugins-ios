@@ -1,6 +1,7 @@
 ---
 name: pr-review-check
 description: Use this skill when the user wants to "PRのレビューコメントを確認", "レビュー内容を評価して", "指摘の妥当性を見て", "どのコメントに対応すべきか", "PRのフィードバックを整理", "レビューが来たので確認したい", "指摘を優先順位付けして", "pr review", "check pr comments", or any similar request to review, evaluate, or prioritize comments and feedback on a GitHub PR. Fetches all PR comments (inline code review threads, review bodies, and general issue comments) using gh CLI and GraphQL, then evaluates each for technical validity, scope, and importance — including iOS/Swift-specific concerns. Always use this skill proactively when the user mentions reviewing PR feedback, checking review comments, or figuring out what to fix in a PR.
+context: fork
 ---
 
 # PR レビューコメント評価
