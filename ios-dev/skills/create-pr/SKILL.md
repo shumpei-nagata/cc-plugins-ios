@@ -1,12 +1,12 @@
 ---
 name: create-pr
-description: Use this skill when the user wants to "create a pull request", "open a PR", "submit a PR", "PRを作成", "プルリクエストを作成", "PRを出す", "GitHubにPRを上げる", "レビューを依頼する", or any similar request to push work to GitHub for review. Creates a PR using the gh CLI, auto-generates the body from git log (respecting .github/PULL_REQUEST_TEMPLATE.md if present), and automatically requests reviews from both GitHub Copilot and Codex. Use this skill proactively whenever the user's intent is clearly to create a GitHub PR, even if they don't explicitly say "PR" — for example, "作業終わったのでレビューしてもらいたい" or "マージしてほしいのでレビュー依頼したい".
+description: Use this skill when the user wants to "create a pull request", "open a PR", "submit a PR", "PRを作成", "プルリクエストを作成", "PRを出す", "GitHubにPRを上げる", "レビューを依頼する", or any similar request to push work to GitHub for review. Creates a PR using the gh CLI, auto-generates the body from git log (respecting .github/PULL_REQUEST_TEMPLATE.md if present), and automatically requests a review from Codex. Use this skill proactively whenever the user's intent is clearly to create a GitHub PR, even if they don't explicitly say "PR" — for example, "作業終わったのでレビューしてもらいたい" or "マージしてほしいのでレビュー依頼したい".
 context: fork
 ---
 
 # GitHub PR Creator
 
-GitHubにPull Requestを作成し、CopilotとCodexの両方にレビューを自動依頼するワークフロー。
+GitHubにPull Requestを作成し、Codexにレビューを自動依頼するワークフロー。
 
 ## ワークフロー
 
@@ -79,20 +79,13 @@ git diff origin/<base>..HEAD --stat
 
 ### Step 5: PRの作成
 
-確認が取れたらPRを作成。`--reviewer @copilot` を付けてCopilotレビューを同時に依頼する:
+確認が取れたらPRを作成する:
 
 ```bash
 gh pr create \
   --base <base-branch> \
   --title "<title>" \
-  --body "<body>" \
-  --reviewer @copilot
-```
-
-**フォールバック**: `@copilot` がレビュアーとして無効（リポジトリでCopilotが有効でない等）でエラーになった場合は、`--reviewer @copilot` を外してPRを作成し、その後以下で追加する:
-
-```bash
-gh pr edit --add-reviewer @copilot
+  --body "<body>"
 ```
 
 ### Step 6: Codexレビューの依頼
@@ -107,5 +100,4 @@ gh pr comment --body "@codex review"
 
 以下を出力する:
 - PR URL
-- Copilotレビュー依頼済みの確認
 - Codexレビューコメント投稿済みの確認
